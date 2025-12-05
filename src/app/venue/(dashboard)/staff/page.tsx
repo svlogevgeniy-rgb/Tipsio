@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -14,7 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Loader2, User, Trash2 } from "lucide-react";
+import { Loader2, User, Trash2, Camera, X } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -102,6 +102,11 @@ export default function StaffManagementPage() {
     OTHER: t('roles.other'),
   };
 
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const form = useForm<StaffForm>({
     resolver: zodResolver(staffSchema),
     defaultValues: {
@@ -111,6 +116,42 @@ export default function StaffManagementPage() {
       avatarUrl: "",
     },
   });
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+    if (!allowedTypes.includes(file.type)) {
+      setError("Только JPEG, PNG, WebP или GIF");
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      setError("Файл слишком большой. Максимум 5MB");
+      return;
+    }
+
+    setAvatarFile(file);
+    setError(null);
+
+    // Create preview
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setAvatarPreview(e.target?.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const clearAvatar = () => {
+    setAvatarFile(null);
+    setAvatarPreview(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -146,11 +187,38 @@ export default function StaffManagementPage() {
     }
     setIsLoading(true);
     setError(null);
+    
     try {
+      let avatarUrl = data.avatarUrl;
+
+      // Upload avatar if file selected
+      if (avatarFile) {
+        setIsUploading(true);
+        const formData = new FormData();
+        formData.append("file", avatarFile);
+
+        const uploadRes = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!uploadRes.ok) {
+          const uploadError = await uploadRes.json();
+          setError(uploadError.message || "Failed to upload photo");
+          setIsUploading(false);
+          setIsLoading(false);
+          return;
+        }
+
+        const uploadData = await uploadRes.json();
+        avatarUrl = uploadData.url;
+        setIsUploading(false);
+      }
+
       const response = await fetch("/api/staff", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, venueId }),
+        body: JSON.stringify({ ...data, avatarUrl, venueId }),
       });
       const result = await response.json();
       if (!response.ok) {
@@ -160,10 +228,12 @@ export default function StaffManagementPage() {
       setStaff([result.staff, ...staff]);
       setIsDialogOpen(false);
       form.reset();
+      clearAvatar();
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
+      setIsUploading(false);
     }
   };
 
@@ -291,24 +361,52 @@ export default function StaffManagementPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="avatarUrl">{t('photo')}</Label>
-                <Input
-                  id="avatarUrl"
-                  placeholder={t('photoPlaceholder')}
-                  {...form.register("avatarUrl")}
-                  className="h-12"
+                <Label>{t('photo')}</Label>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/gif"
+                  onChange={handleFileSelect}
+                  className="hidden"
+                  id="avatar-upload"
                 />
-                <p className="text-xs text-muted-foreground">
+                
+                {avatarPreview ? (
+                  <div className="relative w-24 h-24 mx-auto">
+                    <img
+                      src={avatarPreview}
+                      alt="Preview"
+                      className="w-24 h-24 rounded-full object-cover border-2 border-primary/20"
+                    />
+                    <button
+                      type="button"
+                      onClick={clearAvatar}
+                      className="absolute -top-2 -right-2 w-6 h-6 bg-destructive rounded-full flex items-center justify-center text-white"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <label
+                    htmlFor="avatar-upload"
+                    className="flex flex-col items-center justify-center w-24 h-24 mx-auto rounded-full border-2 border-dashed border-muted-foreground/30 cursor-pointer hover:border-primary/50 transition-colors"
+                  >
+                    <Camera className="w-8 h-8 text-muted-foreground" />
+                    <span className="text-xs text-muted-foreground mt-1">{t('addPhoto')}</span>
+                  </label>
+                )}
+                
+                <p className="text-xs text-muted-foreground text-center">
                   {t('photoHint')}
                 </p>
               </div>
 
               <Button
                 type="submit"
-                disabled={isLoading}
+                disabled={isLoading || isUploading}
                 className="w-full h-14 text-lg font-heading font-bold bg-gradient-to-r from-cyan-500 to-blue-600"
               >
-                {isLoading ? t('adding') : t('addStaffButton')}
+                {isUploading ? t('uploading') : isLoading ? t('adding') : t('addStaffButton')}
               </Button>
             </form>
           </DialogContent>

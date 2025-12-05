@@ -7,11 +7,11 @@ import { generateShortCode } from "@/lib/qr";
 const createStaffSchema = z.object({
   displayName: z.string().min(1, "Display name is required"),
   fullName: z.string().optional(),
-  role: z.enum(["WAITER", "BARTENDER", "BARISTA", "HOSTESS", "OTHER"]),
+  role: z.enum(["WAITER", "BARTENDER", "BARISTA", "HOSTESS", "CHEF", "ADMINISTRATOR", "OTHER"]),
   phone: z.string().optional(),
   email: z.string().email().optional(),
   participatesInPool: z.boolean().default(true),
-  avatarUrl: z.string().url().optional(),
+  avatarUrl: z.string().optional(),
 });
 
 // GET /api/staff - List staff for current venue
@@ -195,9 +195,13 @@ export async function POST(request: NextRequest) {
       // Create staff member
       const staff = await tx.staff.create({
         data: {
-          ...restData,
-          venueId,
-          userId,
+          displayName: restData.displayName,
+          fullName: restData.fullName,
+          role: restData.role as "WAITER" | "BARTENDER" | "BARISTA" | "HOSTESS" | "OTHER",
+          participatesInPool: restData.participatesInPool,
+          avatarUrl: restData.avatarUrl,
+          venue: { connect: { id: venueId } },
+          ...(userId ? { user: { connect: { id: userId } } } : {}),
         },
       });
 

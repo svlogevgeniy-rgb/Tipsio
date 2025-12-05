@@ -17,6 +17,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 type DistributionMode = "POOLED" | "PERSONAL";
 
@@ -73,7 +74,10 @@ export default function VenueLayout({ children }: { children: React.ReactNode })
           <Link href="/venue/dashboard" className="text-2xl font-heading font-bold text-gradient">
             Tipsio
           </Link>
-          <LanguageSwitcher />
+          <div className="flex items-center gap-1">
+            <ThemeToggle />
+            <LanguageSwitcher />
+          </div>
         </div>
 
         <nav className="flex-1 px-4 space-y-1">
@@ -113,7 +117,8 @@ export default function VenueLayout({ children }: { children: React.ReactNode })
         <Link href="/venue/dashboard" className="text-xl font-heading font-bold text-gradient">
           Tipsio
         </Link>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
+          <ThemeToggle />
           <LanguageSwitcher />
           <Button
             variant="ghost"

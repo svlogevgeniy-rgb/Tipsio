@@ -3,53 +3,82 @@
 @tailwind utilities;
 
 @layer base {
+  /* Light theme */
   :root {
-    /* Основной фон - глубокий океан */
-    --background: 222 47% 5%; /* #020617 */
-    --foreground: 210 40% 98%; /* #F9FAFB */
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
 
-    /* Карточки (полупрозрачные для эффекта стекла) */
-    --card: 222 47% 7%; /* Чуть светлее фона */
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
  
-    /* Popovers / Модалки */
-    --popover: 222 47% 5%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
 
-    /* Primary: Бирюза (#0EA5E9) - цвет океана/бассейна */
-    --primary: 199 89% 48%; 
-    --primary-foreground: 222 47% 7%; /* Темный текст на яркой кнопке */
+    --primary: 199 89% 48%;
+    --primary-foreground: 0 0% 100%;
 
-    /* Secondary/Accent: Коралл (#F97373) - закаты и тепло */
-    --secondary: 0 91% 71%; 
-    --secondary-foreground: 222 47% 5%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 47% 11%;
 
-    /* Muted: Для второстепенного текста */
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%; /* #6B7280 */
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
 
-    /* Accents for interaction */
-    --accent: 217 33% 17%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 220 14% 96%;
+    --accent-foreground: 222 47% 11%;
 
-    /* Destructive / Success */
-    --destructive: 0 84% 60%; /* #EF4444 */
-    --destructive-foreground: 210 40% 98%;
-    --success: 142 71% 45%; /* #22C55E */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 71% 45%;
 
-    /* Borders & Inputs */
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 199 89% 48%; /* Цвет фокуса совпадает с Primary */
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 199 89% 48%;
 
-    /* Charts */
     --chart-1: 199 89% 48%;
     --chart-2: 0 91% 71%;
     --chart-3: 142 71% 45%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
 
-    --radius: 0.75rem; /* rounded-xl/2xl для мягкости */
+    --radius: 0.75rem;
+  }
+
+  /* Dark theme */
+  .dark {
+    --background: 222 47% 5%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 7%;
+    --card-foreground: 210 40% 98%;
+ 
+    --popover: 222 47% 5%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 199 89% 48%;
+    --primary-foreground: 222 47% 7%;
+
+    --secondary: 0 91% 71%;
+    --secondary-foreground: 222 47% 5%;
+
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 33% 17%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --success: 142 71% 45%;
+
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 199 89% 48%;
+
+    --chart-1: 199 89% 48%;
+    --chart-2: 0 91% 71%;
+    --chart-3: 142 71% 45%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
   }
 
   * {
@@ -71,12 +100,12 @@
 
   /* Утилита для Стекла (Glassmorphism) */
   .glass {
-    @apply bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl;
+    @apply bg-white/80 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 shadow-lg dark:shadow-xl;
   }
   
   /* Утилита для сильного стекла (для модалок) */
   .glass-heavy {
-    @apply bg-[#020617]/80 backdrop-blur-xl border border-white/5;
+    @apply bg-white/95 dark:bg-[#020617]/80 backdrop-blur-xl border border-gray-200 dark:border-white/5;
   }
 
   /* Живой градиент текста */
