@@ -337,33 +337,6 @@ export default function VenueSettingsPage() {
         </CardContent>
       </Card>
 
-      {/* Guest Options */}
-      <Card className="glass">
-        <CardHeader>
-          <CardTitle className="font-heading">Guest Options</CardTitle>
-          <CardDescription>
-            Control what guests can do when tipping via table QR
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex items-center justify-between">
-            <div>
-              <Label htmlFor="allowStaffChoice" className="font-medium">
-                Allow staff selection
-              </Label>
-              <p className="text-sm text-muted-foreground">
-                Let guests choose a specific staff member when using table QR
-              </p>
-            </div>
-            <Switch
-              id="allowStaffChoice"
-              checked={allowStaffChoice}
-              onCheckedChange={setAllowStaffChoice}
-            />
-          </div>
-        </CardContent>
-      </Card>
-
       <Button
         onClick={handleSaveDistribution}
         disabled={isLoading}

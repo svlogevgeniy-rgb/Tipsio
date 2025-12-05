@@ -570,9 +570,6 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-2xl font-heading font-bold text-gradient">Tipsio</div>
             <div className="flex gap-6 text-sm text-muted-foreground">
-              <Link href="/staff/login" className="hover:text-foreground transition-colors">
-                {t('footer.staffLogin')}
-              </Link>
               <Link href="/venue/login" className="hover:text-foreground transition-colors">
                 {t('footer.venueLogin')}
               </Link>
