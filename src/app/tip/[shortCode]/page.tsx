@@ -9,13 +9,7 @@ import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { useTranslations } from "@/i18n/client";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { Loader2, User, Users, Heart, ChevronRight } from "lucide-react";
 
 interface Staff {
@@ -112,16 +106,26 @@ export default function TipPage() {
 
   const isPersonalQr = qrData?.type === "PERSONAL";
   const isPersonalDistribution = qrData?.venue.distributionMode === "PERSONAL";
+  // Show staff selection for non-personal QR codes when distribution is PERSONAL or allowStaffChoice is enabled
   const showStaffChoice =
     !isPersonalQr &&
     (isPersonalDistribution || qrData?.venue.allowStaffChoice) &&
     qrData?.availableStaff &&
     qrData.availableStaff.length > 0;
+  // In PERSONAL distribution mode, pool option is not available - must select a staff member
+  const allowPoolOption = !isPersonalDistribution && qrData?.venue.allowStaffChoice;
   const targetStaff = isPersonalQr
     ? qrData?.staff
     : tipTarget === "staff"
       ? qrData?.availableStaff.find((s) => s.id === selectedStaffId)
       : null;
+
+  // For PERSONAL distribution, auto-set tipTarget to "staff"
+  useEffect(() => {
+    if (isPersonalDistribution && !isPersonalQr) {
+      setTipTarget("staff");
+    }
+  }, [isPersonalDistribution, isPersonalQr]);
 
   async function handleSubmit() {
     if (!finalAmount || finalAmount < 1000) return;
@@ -248,49 +252,72 @@ export default function TipPage() {
             <p className="text-xs font-medium text-slate-400 mb-2 uppercase tracking-wide">
               {t("whoServed")}
             </p>
-            <div className="grid grid-cols-2 gap-2 mb-3">
-              <button
-                onClick={() => {
-                  setTipTarget("pool");
-                  setSelectedStaffId(null);
-                }}
-                className={`p-3 rounded-xl border text-left transition-all ${
-                  tipTarget === "pool"
-                    ? "border-cyan-500 bg-cyan-500/10"
-                    : "border-white/10 bg-white/5"
-                }`}
-              >
-                <Users className="w-5 h-5 mb-1 text-cyan-400" />
-                <div className="font-medium text-sm">{t("wholeTeam")}</div>
-              </button>
-              <button
-                onClick={() => setTipTarget("staff")}
-                className={`p-3 rounded-xl border text-left transition-all ${
-                  tipTarget === "staff"
-                    ? "border-cyan-500 bg-cyan-500/10"
-                    : "border-white/10 bg-white/5"
-                }`}
-              >
-                <User className="w-5 h-5 mb-1 text-cyan-400" />
-                <div className="font-medium text-sm">{t("specificStaff")}</div>
-              </button>
-            </div>
-            {tipTarget === "staff" && (
-              <Select
-                value={selectedStaffId || ""}
-                onValueChange={setSelectedStaffId}
-              >
-                <SelectTrigger className="w-full bg-white/5 border-white/10 h-11">
-                  <SelectValue placeholder={t("selectStaff")} />
-                </SelectTrigger>
-                <SelectContent>
-                  {qrData.availableStaff.map((staff) => (
-                    <SelectItem key={staff.id} value={staff.id}>
-                      {staff.displayName}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            
+            {/* Pool/Staff toggle - only show if pool option is allowed */}
+            {allowPoolOption && (
+              <div className="grid grid-cols-2 gap-2 mb-3">
+                <button
+                  onClick={() => {
+                    setTipTarget("pool");
+                    setSelectedStaffId(null);
+                  }}
+                  className={`p-3 rounded-xl border text-left transition-all ${
+                    tipTarget === "pool"
+                      ? "border-cyan-500 bg-cyan-500/10"
+                      : "border-white/10 bg-white/5"
+                  }`}
+                >
+                  <Users className="w-5 h-5 mb-1 text-cyan-400" />
+                  <div className="font-medium text-sm">{t("wholeTeam")}</div>
+                </button>
+                <button
+                  onClick={() => setTipTarget("staff")}
+                  className={`p-3 rounded-xl border text-left transition-all ${
+                    tipTarget === "staff"
+                      ? "border-cyan-500 bg-cyan-500/10"
+                      : "border-white/10 bg-white/5"
+                  }`}
+                >
+                  <User className="w-5 h-5 mb-1 text-cyan-400" />
+                  <div className="font-medium text-sm">{t("specificStaff")}</div>
+                </button>
+              </div>
+            )}
+            
+            {/* Staff cards - show when tipTarget is staff OR when pool option is not allowed */}
+            {(tipTarget === "staff" || !allowPoolOption) && (
+              <div className="grid grid-cols-2 gap-2">
+                {qrData.availableStaff.map((staff) => (
+                  <button
+                    key={staff.id}
+                    onClick={() => {
+                      setSelectedStaffId(staff.id);
+                      setTipTarget("staff");
+                    }}
+                    className={`p-3 rounded-xl border text-center transition-all ${
+                      selectedStaffId === staff.id
+                        ? "border-cyan-500 bg-cyan-500/10"
+                        : "border-white/10 bg-white/5 hover:border-cyan-500/50"
+                    }`}
+                  >
+                    <div className="w-12 h-12 mx-auto mb-2 rounded-full bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center overflow-hidden">
+                      {staff.avatarUrl ? (
+                        <Image
+                          src={staff.avatarUrl}
+                          alt={staff.displayName}
+                          width={48}
+                          height={48}
+                          className="object-cover w-full h-full"
+                        />
+                      ) : (
+                        <User className="w-6 h-6 text-cyan-400" />
+                      )}
+                    </div>
+                    <div className="font-medium text-sm truncate">{staff.displayName}</div>
+                    <div className="text-xs text-slate-400 capitalize">{staff.role.toLowerCase()}</div>
+                  </button>
+                ))}
+              </div>
             )}
           </div>
         )}
@@ -383,7 +410,8 @@ export default function TipPage() {
             !finalAmount ||
             finalAmount < 1000 ||
             submitting ||
-            (tipTarget === "staff" && !selectedStaffId && showStaffChoice)
+            (showStaffChoice && tipTarget === "staff" && !selectedStaffId) ||
+            (showStaffChoice && !allowPoolOption && !selectedStaffId)
           }
           className="w-full h-12 text-base font-bold bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 disabled:opacity-50 rounded-xl"
         >

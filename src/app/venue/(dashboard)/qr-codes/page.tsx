@@ -9,9 +9,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Loader2, Download, ExternalLink, FileImage, FileText } from "lucide-react";
-import { QR_MATERIALS, getBackgroundStyles, QrMaterial } from "@/lib/qr-materials";
+import { Loader2, Download, ExternalLink } from "lucide-react";
 import { useTranslations } from "@/i18n/client";
+import { QrGenerator } from "@/components/venue/qr-codes/QrGenerator";
 
 type QrCode = {
   id: string;
@@ -25,7 +25,6 @@ export default function QrCodesPage() {
   const [venueQr, setVenueQr] = useState<QrCode | null>(null);
   const [isPageLoading, setIsPageLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [downloadingMaterial, setDownloadingMaterial] = useState<string | null>(null);
   const [venueName, setVenueName] = useState<string>("");
   const t = useTranslations('venue.qr');
 
@@ -81,91 +80,6 @@ export default function QrCodesPage() {
     }
   };
 
-  const handleDownloadMaterial = async (material: QrMaterial, format: "png" | "pdf") => {
-    if (!venueQr) return;
-    
-    setDownloadingMaterial(`${material.id}-${format}`);
-    try {
-      const response = await fetch(`/api/qr/${venueQr.id}/material?materialId=${material.id}&format=${format}`);
-      if (!response.ok) throw new Error("Download failed");
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `qr-${venueName.replace(/\s+/g, "-").toLowerCase() || "venue"}-${material.id}.${format}`;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-    } catch (err) {
-      console.error("Download material failed:", err);
-      setError(t('failedToDownloadMaterial'));
-    } finally {
-      setDownloadingMaterial(null);
-    }
-  };
-
-  const MaterialPreview = ({ material }: { material: QrMaterial }) => {
-    const styles = getBackgroundStyles(material.backgroundColor);
-    const isHorizontal = material.orientation === "horizontal";
-    
-    return (
-      <div className="border border-white/10 rounded-xl overflow-hidden bg-white/5 hover:border-primary/30 transition-colors">
-        <div 
-          className="p-4 flex items-center justify-center"
-          style={{ background: styles.background, minHeight: isHorizontal ? "100px" : "160px" }}
-        >
-          <div className={`flex ${isHorizontal ? "flex-row gap-4" : "flex-col gap-3"} items-center`}>
-            <div 
-              className="rounded-lg flex items-center justify-center"
-              style={{ 
-                width: isHorizontal ? "70px" : "90px",
-                height: isHorizontal ? "70px" : "90px",
-                backgroundColor: styles.qrColor === "#FFFFFF" ? "rgba(255,255,255,0.95)" : "rgba(0,0,0,0.95)",
-              }}
-            >
-              <span className="text-xs font-mono" style={{ color: styles.qrColor === "#FFFFFF" ? "#000" : "#FFF" }}>QR</span>
-            </div>
-            <div className={`font-semibold ${isHorizontal ? "text-base" : "text-sm text-center"}`} style={{ color: styles.textColor }}>
-              {material.ctaText}
-            </div>
-          </div>
-        </div>
-        <div className="p-3 flex items-center justify-between bg-white/5">
-          <span className="text-sm text-muted-foreground">{material.label}</span>
-          <div className="flex gap-2">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={() => handleDownloadMaterial(material, "png")} 
-              disabled={downloadingMaterial === `${material.id}-png` || !venueQr}
-            >
-              {downloadingMaterial === `${material.id}-png` ? (
-                <Loader2 className="h-3 w-3 animate-spin" />
-              ) : (
-                <FileImage className="h-3 w-3" />
-              )}
-              <span className="ml-1">PNG</span>
-            </Button>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={() => handleDownloadMaterial(material, "pdf")} 
-              disabled={downloadingMaterial === `${material.id}-pdf` || !venueQr}
-            >
-              {downloadingMaterial === `${material.id}-pdf` ? (
-                <Loader2 className="h-3 w-3 animate-spin" />
-              ) : (
-                <FileText className="h-3 w-3" />
-              )}
-              <span className="ml-1">PDF</span>
-            </Button>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   if (isPageLoading) {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
@@ -189,18 +103,18 @@ export default function QrCodesPage() {
         </div>
       )}
 
-      {/* Main QR Card */}
+      {/* Main QR Card - Quick Access */}
       {venueQr ? (
         <Card className="glass">
           <CardHeader>
-            <CardTitle className="font-heading">{t('yourQr')}</CardTitle>
+            <CardTitle className="font-heading">QR код заведения</CardTitle>
             <CardDescription>
-              {t('yourQrDesc')}
+              Базовый QR код для сканирования.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex flex-col sm:flex-row items-center gap-6">
-              <div className="w-40 h-40 bg-white rounded-xl p-3 flex items-center justify-center">
+              <div className="w-32 h-32 bg-white rounded-xl p-3 flex items-center justify-center shadow-sm">
                 <img 
                   src={`/api/qr/${venueQr.id}/download?format=svg`} 
                   alt="QR Code" 
@@ -208,8 +122,8 @@ export default function QrCodesPage() {
                 />
               </div>
               <div className="flex-1 text-center sm:text-left">
-                <div className="text-lg font-medium mb-2">{venueName || t('venueQr')}</div>
-                <div className="text-sm text-muted-foreground mb-4 break-all">
+                <div className="text-lg font-medium mb-1">{venueName || t('venueQr')}</div>
+                <div className="text-sm text-muted-foreground mb-4 break-all font-mono">
                   {baseUrl}/tip/{venueQr.shortCode}
                 </div>
                 <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
@@ -219,23 +133,23 @@ export default function QrCodesPage() {
                     onClick={() => window.open(`${baseUrl}/tip/${venueQr.shortCode}`, "_blank")}
                   >
                     <ExternalLink className="h-4 w-4 mr-1" />
-                    {t('open')}
+                    Проверить ссылку
                   </Button>
                   <Button 
-                    variant="outline" 
+                    variant="secondary" 
                     size="sm"
                     onClick={() => handleDownload(venueQr.id, "png")}
                   >
                     <Download className="h-4 w-4 mr-1" />
-                    PNG
+                    Скачать PNG
                   </Button>
                   <Button 
-                    variant="outline" 
+                    variant="secondary" 
                     size="sm"
                     onClick={() => handleDownload(venueQr.id, "svg")}
                   >
                     <Download className="h-4 w-4 mr-1" />
-                    SVG
+                    Скачать SVG
                   </Button>
                 </div>
               </div>
@@ -252,35 +166,19 @@ export default function QrCodesPage() {
         </Card>
       )}
 
-      {/* Print Materials */}
+      {/* New Generator Section */}
       {venueQr && (
-        <Card className="glass">
-          <CardHeader>
-            <CardTitle className="font-heading">{t('printMaterials')}</CardTitle>
-            <CardDescription>
-              {t('printMaterialsDesc')}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div>
-              <h4 className="text-sm font-medium mb-3 text-muted-foreground">{t('horizontal')}</h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {QR_MATERIALS.filter(m => m.orientation === "horizontal").map((material) => (
-                  <MaterialPreview key={material.id} material={material} />
-                ))}
-              </div>
-            </div>
-            <div>
-              <h4 className="text-sm font-medium mb-3 text-muted-foreground">{t('vertical')}</h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {QR_MATERIALS.filter(m => m.orientation === "vertical").map((material) => (
-                  <MaterialPreview key={material.id} material={material} />
-                ))}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="space-y-4">
+           <h2 className="text-xl font-heading font-bold">Конструктор материалов</h2>
+           <p className="text-muted-foreground text-sm">
+             Создайте стильные материалы для печати: тейбл-тенты, наклейки и визитки.
+           </p>
+           <Card className="glass border-0 shadow-none bg-transparent">
+             <QrGenerator shortCode={venueQr.shortCode} venueName={venueName} />
+           </Card>
+        </div>
       )}
     </div>
   );
 }
+

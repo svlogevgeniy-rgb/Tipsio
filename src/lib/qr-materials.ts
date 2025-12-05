@@ -4,6 +4,52 @@
  * Requirements 6.1, 6.2, 6.3, 6.4
  */
 
+// --- NEW PRODUCT-FIRST TYPES ---
+
+export type MaterialType = "table-tent" | "sticker" | "card" | "poster";
+
+export interface QrDesignState {
+  materialType: MaterialType;
+  baseColor: string; // Hex color
+  accentColor: string; // Hex color
+  ctaText: string;
+  showLogo: boolean;
+  logoUrl?: string; // For future use
+  customText?: string; // Additional text line
+}
+
+export const MATERIAL_TYPES: { id: MaterialType; label: { ru: string; en: string }; description: { ru: string; en: string } }[] = [
+  {
+    id: "table-tent",
+    label: { ru: "Тейбл-тент", en: "Table Tent" },
+    description: { ru: "Домик на стол (А4)", en: "Table stand (A4)" }
+  },
+  {
+    id: "sticker",
+    label: { ru: "Наклейка", en: "Sticker" },
+    description: { ru: "Для стола или двери", en: "For table or door" }
+  },
+  {
+    id: "card",
+    label: { ru: "Визитка", en: "Business Card" },
+    description: { ru: "Вкладыш в счет", en: "Bill insert" }
+  },
+  {
+    id: "poster",
+    label: { ru: "Плакат", en: "Poster" },
+    description: { ru: "А4/А3 на стену", en: "Wall poster" }
+  }
+];
+
+export const DEFAULT_CTA_TEXTS = [
+  "Оставьте чаевые",
+  "Поблагодарите нас",
+  "Вам понравилось?",
+  "Scan to tip",
+];
+
+// --- LEGACY TYPES (Kept for API compatibility) ---
+
 export type QrOrientation = "horizontal" | "vertical";
 export type QrBackgroundColor = "white" | "black" | "green" | "gradient";
 export type QrCallToAction = "leave_tip" | "scan_to_tip" | "thank_us";

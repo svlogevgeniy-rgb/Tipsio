@@ -131,7 +131,11 @@ export async function GET(
         role: string;
       }> = [];
 
-      if (qrCode.type !== "PERSONAL" && qrCode.venue.allowStaffChoice) {
+      // Load available staff for non-personal QR codes when:
+      // 1. Distribution mode is PERSONAL (tips go to specific staff)
+      // 2. OR allowStaffChoice is enabled (guests can choose who to tip)
+      if (qrCode.type !== "PERSONAL" && 
+          (qrCode.venue.distributionMode === "PERSONAL" || qrCode.venue.allowStaffChoice)) {
         const staff = await prisma.staff.findMany({
           where: {
             venueId: qrCode.venue.id,
