@@ -35,7 +35,7 @@ export default async function RootLayout({
       <body className={`${inter.variable} ${urbanist.variable} font-sans`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >

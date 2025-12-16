@@ -154,7 +154,7 @@ export function LandingHeroSection() {
               transition={{ duration: 0.4, delay: 0.15 }}
               className="text-lg text-slate-600 mb-8 leading-relaxed"
             >
-              {t('hero.description')}
+              {t('hero.subheadline')}
             </motion.p>
             <motion.div
               variants={fadeInUp}
@@ -171,7 +171,7 @@ export function LandingHeroSection() {
               </Link>
               <Link href="/venue/login">
                 <Button variant="ghost" className="h-14 px-8 text-base rounded-full">
-                  {t('hero.secondaryCta')}
+                  {t('nav.login')}
                 </Button>
               </Link>
             </motion.div>

@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn } from 'next-auth/react';
+import { useTheme } from 'next-themes';
 import { ArrowLeft, X, Building2, CreditCard, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -29,6 +30,7 @@ import {
 export default function RegisterPage() {
   const router = useRouter();
   const t = useTranslations('venue.register');
+  const { setTheme } = useTheme();
   const {
     step,
     setStep,
@@ -44,6 +46,11 @@ export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isTesting, setIsTesting] = useState(false);
+
+  // Force light theme for this page
+  useEffect(() => {
+    setTheme('light');
+  }, [setTheme]);
 
   const form1 = useForm<Step1Form>({
     resolver: zodResolver(step1Schema),
