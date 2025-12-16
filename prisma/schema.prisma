@@ -123,6 +123,7 @@ model Venue {
   qrCodes   QrCode[]
   tips      Tip[]
   payouts   Payout[]
+  menuCategories MenuCategory[]
 
   @@index([managerId])
   @@index([status])
@@ -260,4 +261,49 @@ model WebhookLog {
 
   @@index([provider])
   @@index([processed])
+}
+
+
+// ==================== MENU ====================
+
+model MenuCategory {
+  id           String   @id @default(cuid())
+  name         String
+  description  String?
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  venueId      String
+  venue        Venue    @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  
+  parentId     String?
+  parent       MenuCategory?  @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
+  children     MenuCategory[] @relation("CategoryHierarchy")
+  
+  items        MenuItem[]
+
+  @@unique([venueId, name])
+  @@index([venueId])
+  @@index([parentId])
+  @@index([displayOrder])
+}
+
+model MenuItem {
+  id           String   @id @default(cuid())
+  name         String
+  description  String?
+  price        Int?
+  imageUrl     String?
+  isAvailable  Boolean  @default(true)
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  categoryId   String
+  category     MenuCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@index([categoryId])
+  @@index([displayOrder])
+  @@index([isAvailable])
 }

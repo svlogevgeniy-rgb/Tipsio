@@ -14,7 +14,9 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Generate Prisma client
+# Generate Prisma client (needs dummy DATABASE_URL for build)
+ARG DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
+ENV DATABASE_URL=$DATABASE_URL
 RUN npx prisma generate
 
 ENV NEXT_TELEMETRY_DISABLED=1
@@ -50,5 +52,8 @@ EXPOSE 3000
 
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=5 \
+  CMD node -e "fetch('http://localhost:3000/api/health').then(res => process.exit(res.ok ? 0 : 1)).catch(() => process.exit(1))"
 
 CMD ["node", "server.js"]

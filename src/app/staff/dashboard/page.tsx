@@ -65,6 +65,7 @@ export default function StaffDashboardPage() {
 
   useEffect(() => {
     fetchDashboard();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function fetchDashboard() {

@@ -80,6 +80,7 @@ export default function VenueDashboardPage() {
 
   useEffect(() => {
     fetchDashboard();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [period]);
 
   async function fetchDashboard() {

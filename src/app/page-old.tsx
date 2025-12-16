@@ -10,6 +10,7 @@ import {
 } from "framer-motion";
 import { useTranslations } from "@/i18n/client";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import {
   ArrowRight,
@@ -45,11 +46,11 @@ const FloatingNav = () => {
     >
       <nav className="mx-auto max-w-6xl bg-white/10 backdrop-blur-xl border border-white/15 rounded-full px-6 py-3 shadow-2xl shadow-slate-900/20 flex items-center justify-between text-white">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
+          <div className="w-9 h-9 rounded-2xl bg-[#1E5F4B] flex items-center justify-center text-white font-bold text-lg">
             T
           </div>
-          <span className="font-heading font-bold text-xl tracking-tight">
-            Tipsio
+          <span className="font-heading font-bold text-xl tracking-tight text-gradient">
+            TIPSIO
           </span>
         </Link>
         <div className="hidden md:flex items-center gap-8 text-sm font-medium">
@@ -132,10 +133,13 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sky-100 text-sm font-medium"
+              className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm font-medium"
             >
-              <Sparkles size={16} />
-              <span>{t("betaBadge")}</span>
+              <Sparkles size={16} className="text-[#1E5F4B]" />
+              <Badge variant="beta">BETA</Badge>
+              <span className="text-xs uppercase tracking-wide text-slate-100/80">
+                {t("betaBadge")}
+              </span>
             </motion.div>
 
             <motion.h1
@@ -381,7 +385,7 @@ const ImpactRibbon = () => {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
             <p className="text-sm uppercase tracking-[0.2em] text-white/60">
-              Tipsio 2.0
+              TIPSIO 2.0
             </p>
             <h3 className="text-3xl font-heading font-bold">
               {t("impact.title")}
@@ -886,7 +890,7 @@ export default function Home() {
       <footer className="py-12 px-6 border-t border-slate-200 bg-slate-50">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-sm text-slate-500">
-            © 2025 Tipsio. All rights reserved.
+            © 2025 TIPSIO. All rights reserved.
           </div>
           <div className="flex gap-6 text-sm">
             <Link

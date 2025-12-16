@@ -2,9 +2,11 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { useTranslations } from "@/i18n/client";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { CountingNumber } from "@/components/animate-ui/primitives/texts/counting-number";
 import {
@@ -20,7 +22,6 @@ import {
   ChevronDown,
   Lock,
   Smartphone,
-  CreditCard,
   Menu,
   X,
 } from "lucide-react";
@@ -38,8 +39,17 @@ const Navigation = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-slate-200/50">
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
-        <Link href="/" className="text-xl sm:text-2xl font-heading font-bold text-gradient">
-          Tipsio
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/images/Logo_1.svg"
+            alt="TIPSIO Logo"
+            width={32}
+            height={32}
+            className="h-8 w-8"
+            priority
+          />
+          <span className="text-xl sm:text-2xl font-heading font-bold text-gradient">TIPSIO</span>
+          <Badge variant="beta">BETA</Badge>
         </Link>
         
         {/* Desktop menu */}
@@ -222,12 +232,11 @@ const LogoBar = () => {
       <div className="max-w-4xl mx-auto">
         <p className="text-center text-sm text-slate-500 mb-6">{t("logoBar.title")}</p>
         <div className="flex flex-wrap justify-center items-center gap-8 opacity-60 grayscale">
-          <div className="flex items-center gap-2 text-slate-700 font-semibold"><CreditCard size={24} /><span>Visa</span></div>
-          <div className="flex items-center gap-2 text-slate-700 font-semibold"><CreditCard size={24} /><span>Mastercard</span></div>
-          <div className="px-3 py-1 bg-slate-200 rounded text-slate-700 font-bold text-sm">QRIS</div>
+          <Image src="/images/payment/visa.svg" alt="Visa" width={60} height={24} className="h-6 w-auto" />
+          <Image src="/images/payment/mastercard.svg" alt="Mastercard" width={60} height={40} className="h-6 w-auto" />
+          <Image src="/images/payment/google-pay-official.svg" alt="Google Pay" width={60} height={24} className="h-6 w-auto" />
           <div className="text-slate-700 font-semibold">GoPay</div>
           <div className="text-slate-700 font-semibold">OVO</div>
-          <div className="text-slate-700 font-semibold">Google Pay</div>
         </div>
       </div>
     </section>
@@ -245,7 +254,7 @@ const ProblemSection = () => {
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-slate-900 mb-6">{t("problem.title")}</h2>
             <p className="text-lg text-slate-600 leading-relaxed mb-6">{t("problem.desc1")}</p>
             <p className="text-lg text-slate-600 leading-relaxed">
-              <span className="font-semibold text-slate-900">Tipsio</span> {t("problem.desc2")}
+                  <span className="font-semibold text-slate-900">TIPSIO</span> {t("problem.desc2")}
             </p>
           </motion.div>
           <motion.div variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }} className="relative">
@@ -485,7 +494,17 @@ const Footer = () => {
   return (
     <footer className="py-8 sm:py-10 px-4 sm:px-6 bg-slate-900 text-slate-400">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-6">
-        <Link href="/" className="text-xl font-heading font-bold text-gradient">Tipsio</Link>
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/images/Logo_1.svg"
+            alt="TIPSIO Logo"
+            width={32}
+            height={32}
+            className="h-8 w-8 filter invert brightness-0"
+          />
+          <span className="text-xl font-heading font-bold text-white">TIPSIO</span>
+          <Badge variant="beta">BETA</Badge>
+        </Link>
         <div className="flex gap-6 text-sm">
           <a href="https://wa.me/message" className="hover:text-white transition-colors flex items-center gap-2"><MessageCircle size={16} />{t("footer.whatsapp")}</a>
           <Link href="#" className="hover:text-white transition-colors">{t("footer.terms")}</Link>

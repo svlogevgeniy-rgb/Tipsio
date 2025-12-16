@@ -6,7 +6,7 @@
       "cta": "Connect venue"
     },
     "hero": {
-      "badge": "Works in Bali · 0% fee (Beta)",
+      "badge": "Works in Bali · 0% fee",
       "headline": "Don't lose tips because",
       "headlineHighlight": "guests don't have cash",
       "subheadline": "Tourists prefer paying by phone. Let them tip via QRIS, GoPay or card in 7 seconds. Money goes directly to your Midtrans account.",
@@ -96,16 +96,16 @@
         "a": "No, if you already have Midtrans, we integrate with it. If not — we'll help you connect."
       },
       "q2": {
-        "q": "Does money go through Tipsio accounts?",
+        "q": "Does money go through TIPSIO accounts?",
         "a": "Never. Technically money flows: Guest card → Your Midtrans → Your bank account. We only provide IT infrastructure."
       },
       "q3": {
         "q": "How much does it cost for venues?",
-        "a": "Currently the service is completely free (Beta). In the future, the fee will be 5%, but you can set it to be paid by the guest (on top of the tip amount)."
+        "a": "Currently the service is completely free. In the future, the fee will be 5%, but you can set it to be paid by the guest (on top of the tip amount)."
       },
       "q4": {
         "q": "How to pay taxes?",
-        "a": "Tips (Service Charge / Gratuity) have their specifics in Indonesia. Tipsio provides detailed reports for your accounting to keep everything compliant."
+        "a": "Tips (Service Charge / Gratuity) have their specifics in Indonesia. TIPSIO provides detailed reports for your accounting to keep everything compliant."
       },
       "q5": {
         "q": "Does staff need internet?",
@@ -115,17 +115,17 @@
     "finalCta": {
       "title": "Bring tips back to your venue today",
       "subtitle": "Setup takes less than an hour. We'll help at every step via WhatsApp.",
-      "cta": "Connect venue for free"
+      "cta": "Connect venue"
     },
     "footer": {
       "whatsapp": "WhatsApp Support",
       "terms": "Terms of Service",
       "privacy": "Privacy Policy",
-      "copyright": "© 2025 Tipsio Bali. Made with ❤️ in Canggu"
+      "copyright": "© 2025 TIPSIO Bali."
     }
   },
   "landing": {
-    "betaBadge": "Tipsio 2.0 is here",
+    "betaBadge": "TIPSIO 2.0 is here",
     "navNew": {
       "value": "Value",
       "product": "Product",
@@ -153,7 +153,7 @@
     },
     "hero": {
       "title": "Digital tips that actually work for Bali venues",
-      "subtitle": "Guests scan a QR and leave tips in seconds. Staff see every rupiah. You stay in control — and during our Bali beta, Tipsio is free for venues (planned 5% platform fee later).",
+      "subtitle": "Guests scan a QR and leave tips in seconds. Staff see every rupiah. You stay in control — and during our Bali pilot, TIPSIO is free for venues (planned 5% platform fee later).",
       "primaryCta": "Get started",
       "secondaryCta": "See how it works",
       "miniTrust": "Built on Midtrans. Guests can pay with GoPay, OVO, cards and Google Pay — no extra terminals, no new apps for guests."
@@ -171,7 +171,7 @@
     },
     "stats": {
       "setupTime": "Setup time",
-      "platformFee": "Platform fee for beta",
+      "platformFee": "Current platform fee",
       "transparent": "Transparent",
       "available": "Available"
     },
@@ -196,7 +196,7 @@
     },
     "valueDeck": {
       "title": "We cover every side of the table",
-      "subtitle": "Each Tipsio screen reflects what matters to guests, staff, and management.",
+      "subtitle": "Each TIPSIO screen reflects what matters to guests, staff, and management.",
       "venues": {
         "title": "For venues",
         "point1": "Clear tipping rules without POS integrations or new hardware.",
@@ -217,7 +217,7 @@
       }
     },
     "productShowcase": {
-      "title": "What Tipsio looks like",
+      "title": "What TIPSIO looks like",
       "subtitle": "A light guest flow plus a dark, data-rich dashboard.",
       "guest": {
         "title": "Guest screen",
@@ -271,7 +271,7 @@
     },
     "journey": {
       "title": "Onboarding",
-      "subtitle": "How Tipsio fits into your day — from setup to the first thank-yous.",
+      "subtitle": "How TIPSIO fits into your day — from setup to the first thank-yous.",
       "steps": {
         "s1": {
           "title": "Launch",
@@ -333,7 +333,7 @@
     },
     "forVenues": {
       "title": "Built for venue owners who care about their team",
-      "desc": "Tipsio helps you create a fair, transparent tipping system that motivates staff and delights guests — without changing your existing payment setup.",
+      "desc": "TIPSIO helps you create a fair, transparent tipping system that motivates staff and delights guests — without changing your existing payment setup.",
       "point1": "Increase tip volume with convenient cashless payments",
       "point2": "Reduce conflicts with clear distribution rules",
       "point3": "Retain staff with transparent earnings tracking",
@@ -364,7 +364,7 @@
       }
     },
     "howItWorks": {
-      "title": "How Tipsio works in 3 steps",
+      "title": "How TIPSIO works in 3 steps",
       "step1": {
         "title": "1. Your venue connects Midtrans once",
         "description": "You enter your Midtrans Merchant ID and API keys. We don't hold your money — tips go directly to your existing payment account."
@@ -375,9 +375,9 @@
       },
       "step3": {
         "title": "3. Guests leave tips, you settle payouts",
-        "description": "Guests pay with GoPay, OVO, cards or QRIS via Midtrans. Tipsio calculates how much each staff member should get. You pay out in cash or bank transfer and mark payouts as done."
+        "description": "Guests pay with GoPay, OVO, cards or QRIS via Midtrans. TIPSIO calculates how much each staff member should get. You pay out in cash or bank transfer and mark payouts as done."
       },
-      "flowText": "Guest → Midtrans → Your account → Staff payouts, calculated in Tipsio"
+      "flowText": "Guest → Midtrans → Your account → Staff payouts, calculated in TIPSIO"
     },
     "whyBali": {
       "title": "Built for Bali, not for \"global\" headlines",
@@ -387,14 +387,14 @@
       "point4": "Simple onboarding: connect Midtrans, add staff, print QRs — ready in under an hour."
     },
     "productPeek": {
-      "title": "See Tipsio in action",
+      "title": "See TIPSIO in action",
       "guestScreen": "Guest tip screen — scan a QR, tap an amount, pay.",
       "dashboard": "Venue dashboard — all tips and top staff at a glance.",
       "payouts": "Payouts report — know exactly who should get how much."
     },
     "whereWeAre": {
       "title": "Where we are now",
-      "description": "Tipsio is live with early venues in Bali. We're focused on making digital tips easy for guests, transparent for staff, and low‑friction for owners.",
+      "description": "TIPSIO is live with early venues in Bali. We're focused on making digital tips easy for guests, transparent for staff, and low‑friction for owners.",
       "point1": "We integrate with Midtrans and follow their best practices.",
       "point2": "We keep staff dashboards and payouts logic simple and clear.",
       "point3": "We work closely with early partners to refine the product."
@@ -403,7 +403,7 @@
       "title": "Frequently Asked Questions",
       "q1": {
         "question": "Do you touch our money or hold funds?",
-        "answer": "No. All payments go directly to your Midtrans merchant account. Tipsio only helps you track and allocate tips to staff."
+        "answer": "No. All payments go directly to your Midtrans merchant account. TIPSIO only helps you track and allocate tips to staff."
       },
       "q2": {
         "question": "Do guests need to install an app?",
@@ -411,10 +411,10 @@
       },
       "q3": {
         "question": "How do staff get paid?",
-        "answer": "You still pay your staff in cash or via bank transfer. Tipsio calculates how much each staff member should get and shows it in a simple payouts report."
+        "answer": "You still pay your staff in cash or via bank transfer. TIPSIO calculates how much each staff member should get and shows it in a simple payouts report."
       },
       "q4": {
-        "question": "How much does Tipsio cost?",
+        "question": "How much does TIPSIO cost?",
         "answer": "We keep our pricing simple for early partners. Midtrans fees apply as usual. Platform fee is discussed individually based on your volume."
       },
       "q5": {
@@ -424,13 +424,13 @@
     },
     "finalCta": {
       "title": "Ready to try digital tips at your venue?",
-      "subtitle": "Connect Tipsio, start with a few tables or one shift, and see how your staff responds.",
+      "subtitle": "Connect TIPSIO, start with a few tables or one shift, and see how your staff responds.",
       "primaryCta": "Connect my venue",
       "secondaryCta": "Talk to us on WhatsApp"
     },
     "ctaNew": {
       "title": "The fastest way to tidy up tipping",
-      "subtitle": "Connect Tipsio, launch on a few tables, and watch how your team responds."
+      "subtitle": "Connect TIPSIO, launch on a few tables, and watch how your team responds."
     },
     "footer": {
       "staffLogin": "Staff login",
@@ -480,7 +480,7 @@
       "coverFeeDesc": "Add {amount} so {name} receives the full tip",
       "sendTip": "Send Tip Securely",
       "securePayment": "Secure payment via GoPay, OVO, cards or QRIS — processed by our payment provider. No app required.",
-      "poweredBy": "Powered by Tipsio",
+      "poweredBy": "Powered by TIPSIO",
       "tipLabel": "Tip",
       "feeCovered": "Fee covered",
       "totalLabel": "Total",
@@ -580,8 +580,8 @@
       "step1Subtitle": "Tell us about your venue",
       "step2Title": "Connect Midtrans",
       "step2Subtitle": "Enter your payment credentials",
-      "step3Title": "Distribution Mode",
-      "step3Subtitle": "How should tips be distributed?",
+      "step3Title": "Tip Distribution Model",
+      "step3Subtitle": "Choose how tips are distributed",
       "venueName": "Venue Name",
       "venueNamePlaceholder": "Cafe Organic",
       "email": "Email",
@@ -595,7 +595,7 @@
       "connected": "Access Verified",
       "pooledMode": "Single Pool",
       "pooledModeDesc": "All tips go to the venue account without staff breakdown",
-      "personalMode": "Per Staff",
+      "personalMode": "Personal Tips",
       "personalModeDesc": "Tips are distributed among team members",
       "continue": "Continue",
       "createAccount": "Create Account",
@@ -611,7 +611,7 @@
       "step": "Step",
       "profileCreated": "Your venue profile has been created. Let's set up payments next.",
       "continueToPayments": "Continue to Payments",
-      "midtransInfo": "Tipsio doesn't hold your money. All tips go directly to your Midtrans merchant account.",
+      "midtransInfo": "TIPSIO doesn't hold your money. All tips go directly to your Midtrans merchant account.",
       "merchantId": "Merchant ID",
       "clientKey": "Client Key",
       "serverKey": "Server Key",
@@ -659,17 +659,19 @@
     "nav": {
       "dashboard": "Dashboard",
       "staff": "Staff",
-      "qrCodes": "QR Codes",
+      "qrCodes": "QR codes",
+      "menu": "Menu",
       "payouts": "Payouts",
       "settings": "Settings",
-      "signOut": "Sign Out"
+      "profile": "Profile",
+      "signOut": "Sign out"
     },
     "payouts": {
       "title": "Payouts",
       "subtitle": "Mark payouts to staff",
       "toPay": "To pay",
       "staffWithBalance": "Staff with balance",
-      "warning": "Tipsio does not transfer money to staff accounts",
+      "warning": "TIPSIO does not transfer money to staff accounts",
       "warningDesc": "First pay your staff in cash or by transfer, then mark the payout here.",
       "accumulatedTips": "Accumulated tips",
       "noStaff": "No staff",
@@ -806,7 +808,7 @@
       "subtitle": "Monitor all tip transactions across the platform",
       "searchPlaceholder": "Search by order ID or venue...",
       "allMidtrans": "All Midtrans",
-      "allTipsio": "All Tipsio",
+      "allTipsio": "All TIPSIO",
       "totalToday": "Total today",
       "successful": "Successful",
       "pending": "Pending",
@@ -815,7 +817,7 @@
       "venue": "Venue",
       "amount": "Amount",
       "midtransStatus": "Midtrans",
-      "tipsioStatus": "Tipsio",
+      "tipsioStatus": "TIPSIO",
       "action": "Action",
       "viewDetails": "View details",
       "transactionDetails": "Transaction Details",

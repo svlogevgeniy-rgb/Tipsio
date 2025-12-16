@@ -4,6 +4,7 @@ import { SessionProvider } from "@/components/providers/session-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
+import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
 
 const inter = Inter({
@@ -17,8 +18,8 @@ const urbanist = Urbanist({
 });
 
 export const metadata: Metadata = {
-  title: "Tipsio - Digital Tips for Bali",
-  description: "Cashless tipping platform for modern Bali venues",
+  title: "TIPSIO — Digital Tips for Bali",
+  description: "TIPSIO is the cashless tipping platform for modern Bali venues",
 };
 
 export default async function RootLayout({
@@ -41,6 +42,7 @@ export default async function RootLayout({
           <NextIntlClientProvider messages={messages}>
             <SessionProvider>{children}</SessionProvider>
           </NextIntlClientProvider>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

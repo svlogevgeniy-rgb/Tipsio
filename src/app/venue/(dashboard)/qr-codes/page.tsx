@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -113,11 +114,12 @@ export default function QrCodesPage() {
           <CardContent>
             <div className="flex flex-col md:flex-row items-center gap-6">
               {/* QR Preview */}
-              <div className="w-32 h-32 md:w-40 md:h-40 bg-white rounded-xl p-3 shadow-sm flex-shrink-0">
-                <img
+              <div className="w-32 h-32 md:w-40 md:h-40 bg-white rounded-xl p-3 shadow-sm flex-shrink-0 relative">
+                <Image
                   src={`/api/qr/${venueQr.id}/download?format=svg`}
                   alt="QR Code"
-                  className="w-full h-full"
+                  fill
+                  className="object-contain"
                 />
               </div>
 

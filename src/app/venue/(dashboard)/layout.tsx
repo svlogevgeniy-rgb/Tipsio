@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import type { LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
@@ -16,6 +17,8 @@ import {
   LogOut,
   Menu,
   X,
+  UtensilsCrossed,
+  UserCircle,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 
@@ -25,11 +28,20 @@ interface VenueData {
   distributionMode: DistributionMode;
 }
 
+type NavKey = "dashboard" | "staff" | "menu" | "qrCodes" | "payouts" | "settings" | "profile";
+
+interface NavItem {
+  href: string;
+  icon: LucideIcon;
+  labelKey: NavKey;
+  showFor: DistributionMode[];
+}
+
 export default function VenueLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [venueData, setVenueData] = useState<VenueData | null>(null);
-  const t = useTranslations('venue.nav');
+  const t = useTranslations("venue.nav");
 
   // Fetch venue data to get distribution mode
   useEffect(() => {
@@ -47,16 +59,18 @@ export default function VenueLayout({ children }: { children: React.ReactNode })
     fetchVenueData();
   }, []);
 
-  const allNavItems = [
-    { href: "/venue/dashboard", label: t('dashboard'), icon: LayoutDashboard, showFor: ["POOLED", "PERSONAL"] },
-    { href: "/venue/staff", label: t('staff'), icon: Users, showFor: ["PERSONAL"] },
-    { href: "/venue/qr-codes", label: t('qrCodes'), icon: QrCode, showFor: ["POOLED", "PERSONAL"] },
-    { href: "/venue/payouts", label: t('payouts'), icon: Wallet, showFor: ["PERSONAL"] },
-    { href: "/venue/settings", label: t('settings'), icon: Settings, showFor: ["POOLED", "PERSONAL"] },
+  const allNavItems: NavItem[] = [
+    { href: "/venue/dashboard", labelKey: "dashboard", icon: LayoutDashboard, showFor: ["POOLED", "PERSONAL"] },
+    { href: "/venue/staff", labelKey: "staff", icon: Users, showFor: ["PERSONAL"] },
+    { href: "/venue/menu", labelKey: "menu", icon: UtensilsCrossed, showFor: ["POOLED", "PERSONAL"] },
+    { href: "/venue/qr-codes", labelKey: "qrCodes", icon: QrCode, showFor: ["POOLED", "PERSONAL"] },
+    { href: "/venue/payouts", labelKey: "payouts", icon: Wallet, showFor: ["PERSONAL"] },
+    { href: "/venue/settings", labelKey: "settings", icon: Settings, showFor: ["POOLED", "PERSONAL"] },
+    { href: "/venue/profile", labelKey: "profile", icon: UserCircle, showFor: ["POOLED", "PERSONAL"] },
   ];
 
   // Filter nav items based on distribution mode
-  const navItems = allNavItems.filter(item => 
+  const navItems = allNavItems.filter((item) =>
     item.showFor.includes(venueData?.distributionMode || "PERSONAL")
   );
 
@@ -72,7 +86,7 @@ export default function VenueLayout({ children }: { children: React.ReactNode })
       <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-64 flex-col glass border-r border-white/5 z-40">
         <div className="p-6 flex items-center justify-between">
           <Link href="/venue/dashboard" className="text-2xl font-heading font-bold text-gradient">
-            Tipsio
+            TIPSIO
           </Link>
           <div className="flex items-center gap-1">
             <ThemeToggle />
@@ -83,6 +97,7 @@ export default function VenueLayout({ children }: { children: React.ReactNode })
         <nav className="flex-1 px-4 space-y-1">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
+            const label = t(item.labelKey);
             return (
               <Link
                 key={item.href}
@@ -94,7 +109,7 @@ export default function VenueLayout({ children }: { children: React.ReactNode })
                 }`}
               >
                 <item.icon className="h-5 w-5" />
-                <span className="font-medium">{item.label}</span>
+                <span className="font-medium">{label}</span>
               </Link>
             );
           })}
@@ -115,7 +130,7 @@ export default function VenueLayout({ children }: { children: React.ReactNode })
       {/* Mobile Header */}
       <header className="md:hidden fixed top-0 left-0 right-0 h-16 glass border-b border-white/5 z-40 flex items-center justify-between px-4">
         <Link href="/venue/dashboard" className="text-xl font-heading font-bold text-gradient">
-          Tipsio
+          TIPSIO
         </Link>
         <div className="flex items-center gap-1">
           <ThemeToggle />
@@ -137,6 +152,7 @@ export default function VenueLayout({ children }: { children: React.ReactNode })
           <nav className="relative glass border-b border-white/5 p-4 space-y-1">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
+              const label = t(item.labelKey);
               return (
                 <Link
                   key={item.href}
@@ -149,7 +165,7 @@ export default function VenueLayout({ children }: { children: React.ReactNode })
                   }`}
                 >
                   <item.icon className="h-5 w-5" />
-                  <span className="font-medium">{item.label}</span>
+                  <span className="font-medium">{label}</span>
                 </Link>
               );
             })}
@@ -170,6 +186,7 @@ export default function VenueLayout({ children }: { children: React.ReactNode })
         <div className="flex justify-around py-2">
           {navItems.slice(0, 5).map((item) => {
             const isActive = pathname === item.href;
+            const label = t(item.labelKey);
             return (
               <Link
                 key={item.href}
@@ -179,7 +196,7 @@ export default function VenueLayout({ children }: { children: React.ReactNode })
                 }`}
               >
                 <item.icon className="h-5 w-5" />
-                <span className="text-xs">{item.label}</span>
+                <span className="text-xs">{label}</span>
               </Link>
             );
           })}

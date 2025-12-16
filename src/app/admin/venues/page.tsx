@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Building2, Search, MoreVertical, Ban, CheckCircle, AlertCircle, ExternalLink } from 'lucide-react'
+import { Building2, Search, MoreVertical, Ban, CheckCircle, ExternalLink } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -25,7 +25,7 @@ interface Venue {
 export default function AdminVenuesPage() {
   const t = useTranslations('admin.venues')
   const [venues, setVenues] = useState<Venue[]>([])
-  const [loading, setLoading] = useState(true)
+  const [, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('all')
 

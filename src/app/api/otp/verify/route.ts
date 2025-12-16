@@ -1,8 +1,17 @@
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import prisma from "@/lib/prisma";
 import { verifyOtp } from "@/lib/otp";
 import { SignJWT } from "jose";
+import {
+  checkRateLimit,
+  getClientIdentifier,
+  createRateLimitResponse,
+} from "@/lib/rate-limit";
 
 const verifyOtpSchema = z.object({
   code: z.string().length(6, "OTP must be 6 digits"),
@@ -14,6 +23,17 @@ const verifyOtpSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting: 10 attempts per 15 minutes per IP
+    const identifier = getClientIdentifier(request);
+    const rateLimitResult = checkRateLimit(identifier, {
+      maxRequests: 10,
+      windowMs: 15 * 60 * 1000, // 15 minutes
+    });
+
+    if (!rateLimitResult.success) {
+      return createRateLimitResponse(rateLimitResult);
+    }
+
     const body = await request.json();
     const parsed = verifyOtpSchema.safeParse(body);
 

@@ -36,6 +36,7 @@ export default function TipSuccessPage() {
     } else {
       setLoading(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orderId]);
 
   async function fetchTipDetails() {
@@ -119,7 +120,7 @@ export default function TipSuccessPage() {
 
       {/* Footer */}
       <footer className="p-4 text-center">
-        <p className="text-[10px] text-slate-600">Powered by Tipsio</p>
+        <p className="text-[10px] text-slate-600 text-gradient">Powered by TIPSIO</p>
       </footer>
     </div>
   );

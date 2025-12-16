@@ -57,7 +57,7 @@ export default function TipErrorPage() {
 
       {/* Footer */}
       <footer className="p-4 text-center">
-        <p className="text-[10px] text-slate-600">Powered by Tipsio</p>
+        <p className="text-[10px] text-slate-600 text-gradient">Powered by TIPSIO</p>
       </footer>
     </div>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -60,9 +61,11 @@ type Staff = {
 function StaffAvatar({ staff }: { staff: Staff }) {
   if (staff.avatarUrl) {
     return (
-      <img 
+      <Image 
         src={staff.avatarUrl} 
         alt={staff.displayName}
+        width={48}
+        height={48}
         className="w-12 h-12 rounded-full object-cover"
       />
     );
@@ -373,9 +376,11 @@ export default function StaffManagementPage() {
                 
                 {avatarPreview ? (
                   <div className="relative w-24 h-24 mx-auto">
-                    <img
+                    <Image
                       src={avatarPreview}
                       alt="Preview"
+                      width={96}
+                      height={96}
                       className="w-24 h-24 rounded-full object-cover border-2 border-primary/20"
                     />
                     <button

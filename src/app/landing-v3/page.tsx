@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { CountingNumber } from "@/components/animate-ui/primitives/texts/counting-number";
 import {
@@ -32,7 +33,7 @@ const Navigation = () => (
   <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-slate-200/50">
     <nav className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
       <Link href="/landing-v3" className="text-2xl font-heading font-bold text-gradient">
-        Tipsio
+        TIPSIO
       </Link>
 
       <div className="flex items-center gap-3">
@@ -76,7 +77,8 @@ const HeroSection = () => (
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-medium mb-6"
           >
             <span className="text-lg">🇮🇩</span>
-            <span>Работает на Бали · Комиссия 0% (Beta)</span>
+            <span>Работает на Бали · Комиссия 0%</span>
+            <Badge variant="beta">BETA</Badge>
           </motion.div>
 
           {/* Headline */}
@@ -311,7 +313,7 @@ const ProblemSection = () => (
             Без удобного способа оставить чаевые вы теряете значительную часть дохода персонала.
           </p>
           <p className="text-lg text-slate-600 leading-relaxed">
-            <span className="font-semibold text-slate-900">Tipsio</span> превращает
+            <span className="font-semibold text-slate-900">TIPSIO</span> превращает
             «Спасибо, но у меня только карта» в реальные деньги для вашей команды.
             Без покупки терминалов.
           </p>
@@ -653,16 +655,24 @@ const FAQSection = () => {
       a: "Нет, если у вас уже есть Midtrans, мы интегрируемся с ним. Если нет — поможем подключить.",
     },
     {
-      q: "Деньги проходят через счета Tipsio?",
+      q: "Деньги проходят через счета TIPSIO?",
       a: "Никогда. Технически деньги идут: Карта гостя → Ваш Midtrans → Ваш банковский счёт. Мы предоставляем только IT-инфраструктуру.",
     },
     {
       q: "Сколько это стоит для заведения?",
-      a: "Сейчас сервис полностью бесплатен (Beta). В будущем комиссия составит 5%, но вы сможете настроить её оплату за счёт гостя (сверх суммы чаевых).",
+      a: (
+        <>
+          Сейчас сервис полностью бесплатен{" "}
+          <Badge variant="beta" className="ml-2">
+            BETA
+          </Badge>
+          . В будущем комиссия составит 5%, но вы сможете настроить её оплату за счёт гостя (сверх суммы чаевых).
+        </>
+      ),
     },
     {
       q: "Как платить налоги?",
-      a: "Чаевые (Service Charge / Gratuity) имеют свои особенности в Индонезии. Tipsio предоставляет детальные отчёты для вашей бухгалтерии, чтобы всё было «белым».",
+      a: "Чаевые (Service Charge / Gratuity) имеют свои особенности в Индонезии. TIPSIO предоставляет детальные отчёты для вашей бухгалтерии, чтобы всё было «белым».",
     },
     {
       q: "Нужен ли интернет персоналу?",
@@ -771,7 +781,7 @@ const Footer = () => (
   <footer className="py-10 px-6 bg-slate-900 text-slate-400">
     <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
       <Link href="/landing-v3" className="text-xl font-heading font-bold text-gradient">
-        Tipsio
+        TIPSIO
       </Link>
 
       <div className="flex gap-6 text-sm">
@@ -791,7 +801,7 @@ const Footer = () => (
       </div>
 
       <p className="text-sm">
-        © 2025 Tipsio Bali. Made with ❤️ in Canggu
+        © 2025 TIPSIO Bali. Made with ❤️ in Canggu
       </p>
     </div>
   </footer>

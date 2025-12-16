@@ -5,8 +5,7 @@ import {
   shouldShowAddStaffNotification,
   shouldShowDownloadMaterials,
   getPrimaryQrType,
-  DistributionMode,
-  QrDisplayConfig
+  type QrDisplayConfig
 } from './qr-display';
 
 /**
@@ -18,8 +17,6 @@ import {
  * **Validates: Requirements 4.3**
  */
 describe('Property 7: QR display for PERSONAL mode with staff', () => {
-  const distributionModeArb = fc.constantFrom<DistributionMode>('POOLED', 'PERSONAL');
-
   it('should show QR codes for PERSONAL mode when staff exists', () => {
     fc.assert(
       fc.property(

@@ -71,6 +71,7 @@ export default function TipPage() {
 
   useEffect(() => {
     fetchQrData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shortCode]);
 
   async function fetchQrData() {

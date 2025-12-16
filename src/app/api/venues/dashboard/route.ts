@@ -1,3 +1,7 @@
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 
@@ -54,7 +58,7 @@ export async function GET(request: NextRequest) {
 
       // Calculate date range
       const now = new Date();
-      let startDate = new Date(now);
+      const startDate = new Date(now);
       
       if (period === "today") {
         startDate.setHours(0, 0, 0, 0);

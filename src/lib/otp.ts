@@ -116,7 +116,7 @@ export async function sendOtpSms(phone: string, code: string): Promise<boolean> 
   //   process.env.TWILIO_AUTH_TOKEN
   // );
   // await twilio.messages.create({
-  //   body: `Your Tipsio login code is: ${code}`,
+  //   body: `Your TIPSIO login code is: ${code}`,
   //   from: process.env.TWILIO_PHONE_NUMBER,
   //   to: phone,
   // });
@@ -141,9 +141,9 @@ export async function sendOtpEmail(email: string, code: string): Promise<boolean
   // const { Resend } = require('resend');
   // const resend = new Resend(process.env.RESEND_API_KEY);
   // await resend.emails.send({
-  //   from: 'Tipsio <noreply@tipsio.com>',
+  //   from: 'TIPSIO <noreply@tipsio.com>',
   //   to: email,
-  //   subject: 'Your Tipsio Login Code',
+  //   subject: 'Your TIPSIO Login Code',
   //   text: `Your login code is: ${code}. It expires in 5 minutes.`,
   // });
 

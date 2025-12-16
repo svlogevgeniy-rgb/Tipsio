@@ -1,6 +1,9 @@
 import React from 'react';
 import { Document, Page, Text, View, Image, StyleSheet, Font } from '@react-pdf/renderer';
-import { QrDesignState, MaterialType } from '@/lib/qr-materials';
+import type { QrDesignState } from '@/lib/qr-materials';
+
+/* eslint-disable jsx-a11y/alt-text */
+// Note: @react-pdf/renderer Image component doesn't support alt attribute
 
 // Register generic font with Cyrillic support
 Font.register({
@@ -114,7 +117,7 @@ const TableTent = ({ design, qrDataUrl, venueName }: PdfTemplateProps) => {
       <View style={styles.qrContainer}>
         <Image src={qrDataUrl} style={styles.qrImage} />
       </View>
-      <Text style={[styles.subText, textStyle]}>{venueName || 'Tipsio'}</Text>
+      <Text style={[styles.subText, textStyle]}>{venueName || 'TIPSIO'}</Text>
     </>
   );
 
@@ -150,7 +153,7 @@ const Sticker = ({ design, qrDataUrl, venueName }: PdfTemplateProps) => {
         <View style={[styles.qrContainer, { borderRadius: 5, padding: 5 }]}>
           <Image src={qrDataUrl} style={[styles.qrImage, { width: 100, height: 100 }]} />
         </View>
-        <Text style={[styles.subText, textStyle]}>{venueName || 'Tipsio'}</Text>
+        <Text style={[styles.subText, textStyle]}>{venueName || 'TIPSIO'}</Text>
       </View>
       <Text style={{ position: 'absolute', bottom: 50, fontSize: 10, color: '#999' }}>
         Print on A4 sticker paper
@@ -174,7 +177,7 @@ const Card = ({ design, qrDataUrl, venueName }: PdfTemplateProps) => {
         <View style={[styles.qrContainer, { padding: 5, borderRadius: 5 }]}>
           <Image src={qrDataUrl} style={[styles.qrImage, { width: 70, height: 70 }]} />
         </View>
-        <Text style={[styles.subText, textStyle, { fontSize: 8, marginTop: 5 }]}>{venueName || 'Tipsio'}</Text>
+        <Text style={[styles.subText, textStyle, { fontSize: 8, marginTop: 5 }]}>{venueName || 'TIPSIO'}</Text>
       </View>
     </Page>
   );
@@ -194,7 +197,7 @@ const Poster = ({ design, qrDataUrl, venueName }: PdfTemplateProps) => {
         <View style={[styles.qrContainer, { padding: 15, borderRadius: 15 }]}>
           <Image src={qrDataUrl} style={[styles.qrImage, { width: 200, height: 200 }]} />
         </View>
-        <Text style={[styles.subText, textStyle, { fontSize: 16, marginTop: 20 }]}>{venueName || 'Tipsio'}</Text>
+        <Text style={[styles.subText, textStyle, { fontSize: 16, marginTop: 20 }]}>{venueName || 'TIPSIO'}</Text>
       </View>
     </Page>
   );

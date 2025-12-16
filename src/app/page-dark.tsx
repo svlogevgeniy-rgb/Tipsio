@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "@/i18n/client";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import {
   ArrowRight,
@@ -47,8 +48,8 @@ const FloatingNav = () => {
     <header className="fixed top-0 left-0 right-0 z-50 px-6 py-4 animate-fade-in-down">
       <nav className="mx-auto max-w-6xl bg-white/10 backdrop-blur-lg border border-white/15 rounded-full px-6 py-3 shadow-xl flex items-center justify-between text-white">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">T</div>
-          <span className="font-heading font-bold text-xl tracking-tight">Tipsio</span>
+          <div className="w-9 h-9 rounded-2xl bg-[#1E5F4B] flex items-center justify-center text-white font-bold text-lg">T</div>
+          <span className="font-heading font-bold text-xl tracking-tight text-gradient">TIPSIO</span>
         </Link>
         <div className="hidden md:flex items-center gap-8 text-sm font-medium">
           <Link href="#value" className="hover:text-sky-200 transition-colors">{t("navNew.value")}</Link>
@@ -80,9 +81,16 @@ const HeroSection = () => {
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-10 items-center">
           <div className="text-left space-y-6">
-            <motion.div variants={fadeInUp} initial="hidden" animate="visible" transition={{ duration: 0.4 }} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sky-100 text-sm font-medium">
-              <Sparkles size={16} />
-              <span>{t("betaBadge")}</span>
+            <motion.div
+              variants={fadeInUp}
+              initial="hidden"
+              animate="visible"
+              transition={{ duration: 0.4 }}
+              className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm font-medium"
+            >
+              <Sparkles size={16} className="text-[#1E5F4B]" />
+              <Badge variant="beta">BETA</Badge>
+              <span className="text-xs uppercase tracking-wide text-white/80">{t("betaBadge")}</span>
             </motion.div>
             <motion.h1 variants={fadeInUp} initial="hidden" animate="visible" transition={{ duration: 0.4, delay: 0.1 }} className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold tracking-tight leading-[1.05]">
               {t("heroNew.headline")}{" "}
@@ -208,7 +216,7 @@ const ImpactRibbon = () => {
       <div className="max-w-6xl mx-auto relative z-10 space-y-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <p className="text-sm uppercase tracking-[0.2em] text-white/60">Tipsio 2.0</p>
+            <p className="text-sm uppercase tracking-[0.2em] text-white/60">TIPSIO 2.0</p>
             <h3 className="text-3xl font-heading font-bold">{t("impact.title")}</h3>
           </div>
           <p className="text-white/70 max-w-2xl text-base md:text-right">{t("impact.subtitle")}</p>
@@ -482,7 +490,7 @@ export default function Home() {
       </section>
       <footer className="py-12 px-6 border-t border-slate-200 bg-slate-50">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="text-sm text-slate-500">© 2025 Tipsio. All rights reserved.</div>
+          <div className="text-sm text-slate-500">© 2025 TIPSIO. All rights reserved.</div>
           <div className="flex gap-6 text-sm">
             <Link href="#" className="text-slate-500 hover:text-slate-900 transition-colors">Terms</Link>
             <Link href="#" className="text-slate-500 hover:text-slate-900 transition-colors">Privacy</Link>

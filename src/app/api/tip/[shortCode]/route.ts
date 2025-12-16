@@ -1,3 +1,7 @@
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 import { NextRequest, NextResponse } from "next/server";
 
 // Mock data for development/testing when DB is not available

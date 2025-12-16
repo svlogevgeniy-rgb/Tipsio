@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/i18n/client";
@@ -35,9 +36,11 @@ function formatCurrency(amount: number): string {
 function StaffAvatar({ staff }: { staff: StaffBalance }) {
   if (staff.avatarUrl) {
     return (
-      <img 
+      <Image 
         src={staff.avatarUrl} 
         alt={staff.displayName}
+        width={40}
+        height={40}
         className="w-10 h-10 rounded-full object-cover"
       />
     );
@@ -68,6 +71,7 @@ export default function VenuePayoutsPage() {
 
   useEffect(() => {
     fetchStaffBalances();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function fetchStaffBalances() {

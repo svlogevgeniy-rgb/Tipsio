@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -44,16 +44,70 @@ type Step3Form = z.infer<typeof step3Schema>;
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [step, setStep] = useState(1);
+  const t = useTranslations('venue.register');
+
+  // Восстанавливаем состояние из sessionStorage при монтировании
+  const [step, setStep] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = sessionStorage.getItem('venueRegisterStep');
+      return saved ? parseInt(saved, 10) : 1;
+    }
+    return 1;
+  });
+
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isTesting, setIsTesting] = useState(false);
-  const [midtransValid, setMidtransValid] = useState(false);
-  const t = useTranslations('venue.register');
+  
+  const [midtransValid, setMidtransValid] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = sessionStorage.getItem('venueRegisterMidtransValid');
+      return saved === 'true';
+    }
+    return false;
+  });
 
   // Form data storage
-  const [step1Data, setStep1Data] = useState<Step1Form | null>(null);
-  const [step2Data, setStep2Data] = useState<Step2Form | null>(null);
+  const [step1Data, setStep1Data] = useState<Step1Form | null>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = sessionStorage.getItem('venueRegisterStep1');
+      return saved ? JSON.parse(saved) : null;
+    }
+    return null;
+  });
+
+  const [step2Data, setStep2Data] = useState<Step2Form | null>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = sessionStorage.getItem('venueRegisterStep2');
+      return saved ? JSON.parse(saved) : null;
+    }
+    return null;
+  });
+
+  // Сохраняем состояние в sessionStorage при изменении
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('venueRegisterStep', step.toString());
+    }
+  }, [step]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && step1Data) {
+      sessionStorage.setItem('venueRegisterStep1', JSON.stringify(step1Data));
+    }
+  }, [step1Data]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && step2Data) {
+      sessionStorage.setItem('venueRegisterStep2', JSON.stringify(step2Data));
+    }
+  }, [step2Data]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('venueRegisterMidtransValid', midtransValid.toString());
+    }
+  }, [midtransValid]);
 
   // Step 1 form
   const form1 = useForm<Step1Form>({
@@ -154,6 +208,14 @@ export default function RegisterPage() {
       if (!response.ok) {
         setError(result.message || "Registration failed");
         return;
+      }
+
+      // Очищаем sessionStorage после успешной регистрации
+      if (typeof window !== 'undefined') {
+        sessionStorage.removeItem('venueRegisterStep');
+        sessionStorage.removeItem('venueRegisterStep1');
+        sessionStorage.removeItem('venueRegisterStep2');
+        sessionStorage.removeItem('venueRegisterMidtransValid');
       }
 
       // Auto-login after registration

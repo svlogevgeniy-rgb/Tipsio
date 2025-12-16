@@ -72,6 +72,7 @@ export default function StaffHistoryPage() {
 
   useEffect(() => {
     fetchHistory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [periodFilter]);
 
   async function fetchHistory() {
