@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
         },
         staff: {
           select: {
-            name: true,
+            displayName: true,
           },
         },
       },
@@ -66,13 +66,13 @@ export async function GET(request: NextRequest) {
     // Transform data
     const transactionsData = transactions.map((tip) => ({
       id: tip.id,
-      orderId: tip.orderId,
+      orderId: tip.midtransOrderId,
       venue: tip.venue.name,
       amount: tip.netAmount,
-      midtransStatus: tip.midtransStatus || 'pending',
+      midtransStatus: tip.midtransPaymentType || 'pending',
       tipsioStatus: tip.status === 'PAID' ? 'RECORDED' : tip.status === 'PENDING' ? 'PENDING' : 'FAILED',
-      paymentMethod: tip.paymentMethod || 'Unknown',
-      staffName: tip.staff?.name || null,
+      paymentMethod: tip.midtransPaymentType || 'Unknown',
+      staffName: tip.staff?.displayName || null,
       createdAt: tip.createdAt.toISOString(),
       errorMessage: tip.status === 'FAILED' ? 'Payment failed' : undefined,
     }));

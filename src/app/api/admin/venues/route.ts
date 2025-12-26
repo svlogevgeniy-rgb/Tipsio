@@ -28,16 +28,18 @@ export async function GET(request: NextRequest) {
     if (search) {
       where.OR = [
         { name: { contains: search, mode: 'insensitive' } },
-        { area: { contains: search, mode: 'insensitive' } },
+        { address: { contains: search, mode: 'insensitive' } },
       ];
     }
 
     if (status !== 'all') {
       if (status === 'live') {
-        where.midtransStatus = 'LIVE';
+        where.midtransConnected = true;
+        where.midtransEnvironment = 'production';
         where.status = 'ACTIVE';
       } else if (status === 'test') {
-        where.midtransStatus = 'TEST';
+        where.midtransConnected = true;
+        where.midtransEnvironment = 'sandbox';
       } else if (status === 'blocked') {
         where.status = 'BLOCKED';
       }
@@ -74,8 +76,10 @@ export async function GET(request: NextRequest) {
       return {
         id: venue.id,
         name: venue.name,
-        area: venue.area || 'N/A',
-        midtransStatus: venue.midtransStatus || 'NOT_CONNECTED',
+        area: venue.address || 'N/A',
+        midtransStatus: venue.midtransConnected 
+          ? (venue.midtransEnvironment === 'production' ? 'LIVE' : 'TEST')
+          : 'NOT_CONNECTED',
         status: venue.status,
         totalVolume,
         lastActivity: lastActivity.toISOString(),
